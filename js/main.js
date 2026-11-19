@@ -150,7 +150,7 @@ const FAQ = [
   { k: ["precio", "costo", "cuanto", "valor", "barato"], a: "Tenemos piezas desde $220.000 COP hasta más de $4.000.000 COP. Prueba el Asesor IA de la página para ver una recomendación según tu presupuesto." },
   { k: ["talla", "medida", "tamano", "dedo"], a: "Te ayudamos con la talla por WhatsApp: puedes medir un anillo que ya uses o visitar una de nuestras sedes." },
   { k: ["personaliz", "grabado", "disen", "encargo", "medida"], a: "Hacemos joyas personalizadas: eliges metal, piedra y nos cuentas tu idea en la sección «Taller personalizado»." },
-  { k: ["sede", "direccion", "horario", "ubicacion", "donde", "visitar", "cita"], a: "Tenemos sedes en Medellín (Lun–Sáb 10:00–19:00) y Chiquinquirá (Lun–Sáb 9:00–18:00). Puedes agendar cita en la sección Sedes." },
+  { k: ["sede", "direccion", "horario", "ubicacion", "donde", "visitar", "cita"], a: "Tenemos sedes en Medellín y Chiquinquirá (Lun–Sáb 9:00 – 18:00). Puedes agendar cita en la sección Sedes." },
   { k: ["garantia", "devol", "cambio", "reclamo"], a: "Ofrecemos garantía de fabricación y políticas de cambio. Escríbenos por el formulario de contacto con tu número de pedido." },
   { k: ["cuidado", "limpiar", "limpieza", "mantenimiento"], a: "Evita perfumes y cloro, límpialas con un paño suave y guárdalas por separado. Ofrecemos limpieza en nuestras sedes." },
   { k: ["pago", "tarjeta", "transferencia", "nequi"], a: "Coordinamos el pago al cotizar por WhatsApp. Te indicamos los medios disponibles." },
