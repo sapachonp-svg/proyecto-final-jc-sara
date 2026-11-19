@@ -1,165 +1,212 @@
 <!DOCTYPE html>
+<!-- =========================================================
+     index.html — TIENDA PÚBLICA (Joyas Oro y Esmeralda)
+     Estructura de la página. Las secciones vacías con id
+     (chips, grid, adv, craft, sede...) las rellena main.js.
+     Los scripts data.js y main.js se cargan al final del body.
+     ========================================================= -->
 <html lang="es">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Joyas Oro y Esmeralda · Medellín & Chiquinquirá</title>
-<meta name="description" content="Alta joyería en oro 18K y esmeraldas colombianas. Sedes en Medellín y Chiquinquirá.">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Joyas Oro y Esmeralda · Medellín & Chiquinquirá</title>
+  <meta name="description"
+    content="Alta joyería en oro 18K y esmeraldas colombianas. Sedes en Medellín y Chiquinquirá.">
+  <!-- Fuentes, estilos de las animaciones (AOS) y hoja de estilos propia -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-<nav>
-  <b class="brand">Joyas Oro y Esmeralda</b>
-  <div class="links" id="links">
-    <a href="#asesor">Asesor IA</a>
-    <a href="#catalogo">Colecciones</a>
-    <a href="#taller">Personalizados</a>
-    <a href="#arte">Taller</a>
-    <a href="#historia">Historia</a>
-    <a href="#sedes">Sedes</a>
-    <a href="#contacto">Contacto</a>
-    <a class="btn" href="#catalogo">♡ <span id="favc">0</span></a>
-  </div>
-  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
-</nav>
-
-<header class="hero" data-aos="fade-up">
-  <svg class="gem" viewBox="0 0 100 100"><use href="#gemsvg"/></svg>
-  <h1>Elegancia con tradición: oro, esmeraldas y alta joyería</h1>
-  <p>Anillos, manillas, collares y dijes hechos a mano, con sede en Medellín y Chiquinquirá.</p>
-  <a class="btn fill" href="#catalogo">Descubrir colección</a>
-  <a class="btn" href="#asesor">Prueba el asesor IA ✦</a>
-  <div class="badges">
-    <div class="badge"><b>Oro 18K certificado</b>Pureza garantizada</div>
-    <div class="badge"><b>Esmeraldas de origen</b>Boyacá, Colombia</div>
-    <div class="badge"><b>Envíos seguros</b>A todo el país</div>
-  </div>
-</header>
-
-<section id="asesor" data-aos="fade-up">
-  <h2>Encuentra tu joya ideal</h2>
-  <p class="sub">Responde tres preguntas y nuestro asesor con IA te recomienda una pieza.</p>
-  <div class="panel" id="adv"></div>
-</section>
-
-<section id="catalogo" data-aos="fade-up">
-  <h2>Catálogo de colecciones</h2>
-  <p class="sub">Elige una categoría y marca tus favoritos.</p>
-  <div class="chips" id="chips"></div>
-  <div class="grid" id="grid"></div>
-</section>
-
-<section id="taller" data-aos="fade-up">
-  <h2>Taller personalizado</h2>
-  <p class="sub">Diseña tu joya con nosotros.</p>
-  <div class="panel row">
-    <div>
-      <label>1. Metal</label><div class="opts" id="o-metal"></div>
-      <label>2. Piedra principal</label><div class="opts" id="o-stone"></div>
+  <!-- BARRA DE NAVEGACIÓN: enlaces a cada sección y contador de favoritos -->
+  <nav>
+    <b class="brand">Joyas Oro y Esmeralda</b>
+    <div class="links" id="links">
+      <a href="#asesor">Asesor IA</a>
+      <a href="#catalogo">Colecciones</a>
+      <a href="#taller">Personalizados</a>
+      <a href="#arte">Taller</a>
+      <a href="#historia">Historia</a>
+      <a href="#sedes">Sedes</a>
+      <a href="#contacto">Contacto</a>
+      <a class="btn" href="#catalogo">♡ <span id="favc">0</span></a>
     </div>
-    <div>
-      <label for="idea">3. Tu idea (grabado, referencia, boceto)</label>
-      <textarea id="idea" placeholder="Ej: anillo con la inicial de mi mamá y una esmeralda pequeña…"></textarea>
-      <p id="sum" class="sub" style="text-align:left"></p>
-      <a id="wa-custom" class="btn fill wa" target="_blank" rel="noopener">Enviar idea por WhatsApp</a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  </nav>
+
+  <!-- PORTADA (hero): título, descripción y botones principales -->
+  <header class="hero" data-aos="fade-up">
+    <svg class="gem" viewBox="0 0 100 100">
+      <use href="#gemsvg" />
+    </svg>
+    <h1>Elegancia con tradición: oro, esmeraldas y alta joyería</h1>
+    <p>Anillos, manillas, collares y dijes hechos a mano, con sede en Medellín y Chiquinquirá.</p>
+    <a class="btn fill" href="#catalogo">Descubrir colección</a>
+    <a class="btn" href="#asesor">Prueba el asesor IA ✦</a>
+    <div class="badges">
+      <div class="badge"><b>Oro 18K certificado</b>Pureza garantizada</div>
+      <div class="badge"><b>Esmeraldas de origen</b>Boyacá, Colombia</div>
+      <div class="badge"><b>Envíos seguros</b>A todo el país</div>
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="arte" data-aos="fade-up">
-  <h2>El arte artesanal en movimiento</h2>
-  <p class="sub">Toca cada tarjeta para ver el proceso.</p>
-  <div class="craft" id="craft"></div>
-</section>
+  <!-- ASESOR IA: contenedor que rellena main.js con las preguntas y la recomendación -->
+  <section id="asesor" data-aos="fade-up">
+    <h2>Encuentra tu joya ideal</h2>
+    <p class="sub">Responde tres preguntas y nuestro asesor con IA te recomienda una pieza.</p>
+    <div class="panel" id="adv"></div>
+  </section>
 
-<section id="historia" data-aos="fade-up">
-  <h2>Nuestra historia y tradición</h2>
-  <p class="sub">Un legado de generaciones: de las montañas de Chiquinquirá al corazón de Medellín.</p>
-  <div class="time">
-    <div data-aos="fade-right"><b>Chiquinquirá · origen</b><br>Nuestra historia nace en la tradición orfebre de Chiquinquirá, en el corazón de Boyacá.</div>
-    <div data-aos="fade-right"><b>Generaciones de oficio</b><br>El saber del fundido, el tallado y el engaste es un arte heredado y con dedicación a la calidad.</div>
-    <div data-aos="fade-right"><b>Medellín · hoy</b><br>Llevamos esa pasión artesanal a Medellín, fusionando el legado familiar con diseño contemporáneo.</div>
-  </div>
-</section>
+  <!-- CATÁLOGO: filtros por categoría (#chips) y tarjetas de productos (#grid), los pinta main.js -->
+  <section id="catalogo" data-aos="fade-up">
+    <h2>Catálogo de colecciones</h2>
+    <p class="sub">Elige una categoría y marca tus favoritos.</p>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
 
-<section id="sedes" data-aos="fade-up">
-  <h2>Presencia local</h2>
-  <p class="sub">Visítanos o agenda una cita presencial.</p>
-  <div class="tabs">
-    <button class="chip on" data-s="0">Sede Medellin</button>
-    <button class="chip" data-s="1">Sede Chiquinquirá</button>
-  </div>
-  <div class="panel" id="sede" style="text-align:center"></div>
-</section>
-
-<section id="contacto" data-aos="fade-up">
-  <h2>Contáctanos</h2>
-  <p class="sub">Déjanos tu solicitud y te responderemos pronto.</p>
-  <form class="panel" id="cf" novalidate>
-    <div class="row">
+  <!-- TALLER PERSONALIZADO: elegir metal, piedra y escribir la idea; arma un mensaje de WhatsApp -->
+  <section id="taller" data-aos="fade-up">
+    <h2>Taller personalizado</h2>
+    <p class="sub">Diseña tu joya con nosotros.</p>
+    <div class="panel row">
       <div>
-        <label for="c-name">Nombre completo</label>
-        <input id="c-name" name="name" required autocomplete="name">
-        <label for="c-email">Correo electrónico</label>
-        <input id="c-email" name="email" type="email" required autocomplete="email">
-        <label for="c-phone">Teléfono / WhatsApp</label>
-        <input id="c-phone" name="phone" type="tel" autocomplete="tel">
+        <label>1. Metal</label>
+        <div class="opts" id="o-metal"></div>
+        <label>2. Piedra principal</label>
+        <div class="opts" id="o-stone"></div>
       </div>
       <div>
-        <label for="c-type">Tipo de solicitud</label>
-        <select id="c-type" name="type">
-          <option>Cotización</option><option>Joya personalizada</option>
-          <option>Agendar cita</option><option>Garantía / soporte</option><option>Otro</option>
-        </select>
-        <label for="c-msg">Mensaje</label>
-        <textarea id="c-msg" name="msg" required placeholder="Cuéntanos qué necesitas…"></textarea>
+        <label for="idea">3. Tu idea (grabado, referencia, boceto)</label>
+        <textarea id="idea" placeholder="Ej: anillo con la inicial de mi mamá y una esmeralda pequeña…"></textarea>
+        <p id="sum" class="sub" style="text-align:left"></p>
+        <a id="wa-custom" class="btn fill wa" target="_blank" rel="noopener">Enviar idea por WhatsApp</a>
       </div>
     </div>
-    <p id="cmsg" class="note" role="status"></p>
-    <button class="btn fill" type="submit">Enviar solicitud</button>
-  </form>
-</section>
+  </section>
 
-<section data-aos="zoom-in">
-  <div class="panel raffle">
-    <h2>Sigue nuestras redes sociales</h2>
-    <p class="sub"> Puedes encontrarnos en Instagram y Tik Tok</p>
-    <a class="btn fill" target="_blank" rel="noopener" href="https://www.instagram.com/king_emerald_oficial/">Instagram</a>
-    <a class="btn" target="_blank" rel="noopener" href="https://www.tiktok.com/@kingemerald27?_t=8n0M4SWMotR&_r=1">Tik Tok</a>
+  <!-- EL ARTE ARTESANAL: galería de imágenes (tallado, modelado, engastado) que rellena main.js -->
+  <section id="arte" data-aos="fade-up">
+    <h2>El arte artesanal en movimiento</h2>
+    <p class="sub">Toca cada tarjeta para ver el proceso.</p>
+    <div class="craft" id="craft"></div>
+  </section>
+
+  <!-- HISTORIA: línea de tiempo con el origen y la trayectoria de la marca -->
+  <section id="historia" data-aos="fade-up">
+    <h2>Nuestra historia y tradición</h2>
+    <p class="sub">Un legado de generaciones: de las montañas de Chiquinquirá al corazón de Medellín.</p>
+    <div class="time">
+      <div data-aos="fade-right"><b>Chiquinquirá · origen</b><br>Nuestra historia nace en la tradición orfebre de
+        Chiquinquirá, en el corazón de Boyacá.</div>
+      <div data-aos="fade-right"><b>Generaciones de oficio</b><br>El saber del fundido, el tallado y el engaste es un
+        arte heredado y con dedicación a la calidad.</div>
+      <div data-aos="fade-right"><b>Medellín · hoy</b><br>Llevamos esa pasión artesanal a Medellín, fusionando el legado
+        familiar con diseño contemporáneo.</div>
+    </div>
+  </section>
+
+  <!-- SEDES: pestañas Medellín / Chiquinquirá; el contenido (#sede) lo pinta main.js -->
+  <section id="sedes" data-aos="fade-up">
+    <h2>Presencia local</h2>
+    <p class="sub">Visítanos o agenda una cita presencial.</p>
+    <div class="tabs">
+      <button class="chip on" data-s="0">Sede Medellin</button>
+      <button class="chip" data-s="1">Sede Chiquinquirá</button>
+    </div>
+    <div class="panel" id="sede" style="text-align:center"></div>
+  </section>
+
+  <!-- CONTACTO: formulario; se guarda en localStorage y se envía por correo con Formspree -->
+  <section id="contacto" data-aos="fade-up">
+    <h2>Contáctanos</h2>
+    <p class="sub">Déjanos tu solicitud y te responderemos pronto.</p>
+    <form class="panel" id="cf" novalidate>
+      <div class="row">
+        <div>
+          <label for="c-name">Nombre completo</label>
+          <input id="c-name" name="name" required autocomplete="name">
+          <label for="c-email">Correo electrónico</label>
+          <input id="c-email" name="email" type="email" required autocomplete="email">
+          <label for="c-phone">Teléfono / WhatsApp</label>
+          <input id="c-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <div>
+          <label for="c-type">Tipo de solicitud</label>
+          <select id="c-type" name="type">
+            <option>Cotización</option>
+            <option>Joya personalizada</option>
+            <option>Agendar cita</option>
+            <option>Garantía / soporte</option>
+            <option>Otro</option>
+          </select>
+          <label for="c-msg">Mensaje</label>
+          <textarea id="c-msg" name="msg" required placeholder="Cuéntanos qué necesitas…"></textarea>
+        </div>
+      </div>
+      <p id="cmsg" class="note" role="status"></p>
+      <button class="btn fill" type="submit">Enviar solicitud</button>
+    </form>
+  </section>
+
+  <!-- REDES SOCIALES: enlaces a Instagram y Tik Tok -->
+  <section data-aos="zoom-in">
+    <div class="panel raffle">
+      <h2>Sigue nuestras redes sociales</h2>
+      <p class="sub"> Puedes encontrarnos en Instagram y Tik Tok</p>
+      <a class="btn fill" target="_blank" rel="noopener"
+        href="https://www.instagram.com/king_emerald_oficial/">Instagram</a>
+      <a class="btn" target="_blank" rel="noopener" href="https://www.tiktok.com/@kingemerald27?_t=8n0M4SWMotR&_r=1">Tik
+        Tok</a>
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA: información y acceso al panel de administrador -->
+  <footer>
+    © 2026 · Joyas Oro, Plata y Esmeralda · Guía de tallas · Certificados · Cuidado de joyas · Envíos
+    <br><a href="admin.html">Acceso administrador</a>
+  </footer>
+
+  <!-- CHATBOT: botón flotante y ventana de chat (lógica en main.js) -->
+  <button class="chat-fab" id="chatFab" aria-label="Abrir asistente">💬</button>
+  <div class="chat-box" id="chatBox" hidden>
+    <div class="chat-head"><b>Asistente Esmeralda ✦</b><button id="chatClose" aria-label="Cerrar">✕</button></div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-quick" id="chatQuick"></div>
+    <form class="chat-in" id="chatForm">
+      <input id="chatText" placeholder="Escribe tu pregunta…" autocomplete="off">
+      <button class="btn fill" type="submit">Enviar</button>
+    </form>
   </div>
-</section>
 
-<footer>
-  © 2026 · Joyas Oro, Plata y Esmeralda · Guía de tallas · Certificados · Cuidado de joyas · Envíos
-  <br><a href="admin.html">Acceso administrador</a>
-</footer>
+  <!-- Dibujo SVG reutilizable de la gema (lo usan los íconos y el respaldo del catálogo) -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f1d595" />
+        <stop offset="1" stop-color="#b8893a" />
+      </linearGradient>
+      <linearGradient id="e" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#46e0a0" />
+        <stop offset="1" stop-color="#0b6b43" />
+      </linearGradient>
+      <g id="gemsvg">
+        <polygon points="32,20 68,20 82,36 82,64 68,80 32,80 18,64 18,36" fill="url(#e)" stroke="url(#g)"
+          stroke-width="3" />
+        <polygon points="38,28 62,28 72,38 72,62 62,72 38,72 28,62 28,38" fill="none" stroke="#ffffff55" />
+      </g>
+    </defs>
+  </svg>
 
-<!-- Chatbot IA -->
-<button class="chat-fab" id="chatFab" aria-label="Abrir asistente">💬</button>
-<div class="chat-box" id="chatBox" hidden>
-  <div class="chat-head"><b>Asistente Esmeralda ✦</b><button id="chatClose" aria-label="Cerrar">✕</button></div>
-  <div class="chat-msgs" id="chatMsgs"></div>
-  <div class="chat-quick" id="chatQuick"></div>
-  <form class="chat-in" id="chatForm">
-    <input id="chatText" placeholder="Escribe tu pregunta…" autocomplete="off">
-    <button class="btn fill" type="submit">Enviar</button>
-  </form>
-</div>
-
-<svg width="0" height="0" style="position:absolute"><defs>
-  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1d595"/><stop offset="1" stop-color="#b8893a"/></linearGradient>
-  <linearGradient id="e" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#46e0a0"/><stop offset="1" stop-color="#0b6b43"/></linearGradient>
-  <g id="gemsvg">
-    <polygon points="32,20 68,20 82,36 82,64 68,80 32,80 18,64 18,36" fill="url(#e)" stroke="url(#g)" stroke-width="3"/>
-    <polygon points="38,28 62,28 72,38 72,62 62,72 38,72 28,62 28,38" fill="none" stroke="#ffffff55"/>
-  </g>
-</defs></svg>
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script src="js/data.js"></script>
-<script src="js/main.js"></script>
+  <!-- Scripts: la librería AOS, los datos compartidos y la lógica de la tienda -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
 </body>
+
 </html>

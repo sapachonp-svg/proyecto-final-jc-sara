@@ -1,15 +1,27 @@
+/* =========================================================
+   main.js — LÓGICA DE LA TIENDA PÚBLICA (index.html)
+   Controla: menú, catálogo, Asesor, taller personalizado,
+   galería artesanal, sedes, formulario y chatbot.
+   ========================================================= */
+
+// Atajo para document.querySelector y lista de productos con su nivel de precio calculado.
 const $ = s => document.querySelector(s);
 const P = Store.products().map(x => ({ ...x, t: tier(x.p) }));
 
-/* AOS (animaciones al hacer scroll) */
+/* --- Animaciones al hacer scroll (librería AOS) ---
+   Se inicializa solo si la librería AOS está cargada. */
 window.AOS && AOS.init({ duration: 800, once: true, offset: 60 });
 
-/* Menú móvil */
+/* --- Menú móvil ---
+   El botón hamburguesa abre/cierra el menú; se cierra al tocar un enlace. */
 const burger = $("#burger"), links = $("#links");
 burger.onclick = () => { const o = links.classList.toggle("open"); burger.setAttribute("aria-expanded", o); };
 links.addEventListener("click", e => { if (e.target.closest("a")) { links.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
 
-/* ===== CATÁLOGO ===== */
+/* ===== CATÁLOGO =====
+   Dibuja las tarjetas de productos, los filtros por categoría y
+   gestiona los favoritos (guardados en localStorage). */
+// Respaldo: si un producto no tiene imagen, dibuja un SVG según la categoría.
 function art(c) {
   const r = {
     Anillos: '<circle cx="50" cy="62" r="26" fill="none" stroke="url(#g)" stroke-width="7"/><use href="#gemsvg" x="30" y="6" width="40" height="40"/>',
@@ -19,12 +31,15 @@ function art(c) {
   };
   return '<svg viewBox="0 0 100 100">' + (r[c] || r.Dijes) + '</svg>';
 }
+// Favoritos (Set de ids) y categoría activa.
 let fav = new Set(read("jo_fav", [])), cat = "Todos";
 const CATS = ["Todos", "Anillos", "Manillas", "Collares", "Dijes"];
 
+// Pinta los botones de categoría (chips).
 function chips() {
   $("#chips").innerHTML = CATS.map(c => `<button class="chip ${c == cat ? "on" : ""}" data-c="${c}">${c}</button>`).join("");
 }
+// Pinta las tarjetas de producto según la categoría activa y actualiza el contador de favoritos.
 function grid() {
   const list = P.filter(x => cat == "Todos" || x.c == cat);
   $("#grid").innerHTML = list.map(x => `
@@ -39,6 +54,7 @@ function grid() {
     </div>`).join("") || '<p class="sub">No hay piezas en esta categoría.</p>';
   $("#favc").textContent = fav.size;
 }
+// Clicks dentro del catálogo: cambiar de categoría o marcar/desmarcar favorito.
 document.addEventListener("click", e => {
   const c = e.target.closest("[data-c]"), f = e.target.closest("[data-f]");
   if (c) { cat = c.dataset.c; chips(); grid(); }
@@ -51,13 +67,15 @@ document.addEventListener("click", e => {
 });
 chips(); grid();
 
-/* ===== ASESOR IA (recomendador) ===== */
+/* ===== ASESOR IA (recomendador) =====
+   Hace 3 preguntas (ocasión, para quién y presupuesto) y calcula
+   un puntaje por producto para recomendar el que mejor encaje. */
 const Q = [
   { k: "o", q: "1. ¿Cuál es la ocasión?", a: [["boda", "Boda / compromiso"], ["diario", "Uso diario"], ["grado", "Grado / logro"], ["regalo", "Regalo sorpresa"]] },
   { k: "w", q: "2. ¿Para quién es?", a: [["yo", "Para mí"], ["ella", "Para ella"], ["el", "Para él"]] },
   { k: "t", q: "3. ¿Tu presupuesto?", a: [[1, "Hasta $500.000"], [2, "$500.000 – $1.500.000"], [3, "Más de $1.500.000"]] }
 ];
-let st = 0, ans = {};
+let st = 0, ans = {}; // st = paso actual, ans = respuestas del usuario
 function adv() {
   const el = $("#adv");
   const bar = '<div class="steps">' + Q.map((_, i) => `<i class="${i <= st ? "on" : ""}"></i>`).join("") + "</div>";
@@ -66,6 +84,7 @@ function adv() {
     el.innerHTML = bar + `<h3 style="text-align:center;font-size:26px">${q.q}</h3><div class="opts">${q.a.map(a => `<button class="opt" data-a="${a[0]}">${a[1]}</button>`).join("")}</div>`;
     return;
   }
+  // Cuando ya respondió todo, se calcula el producto con mayor puntaje.
   const best = P.map(x => ({
     x, s:
       (x.o.includes(ans.o) ? 3 : 0) + (x.t == ans.t ? 2 : 0) - Math.abs(x.t - ans.t)
@@ -81,14 +100,18 @@ function adv() {
     <button class="btn" id="again">Empezar de nuevo</button></div></div>`;
   $("#again").onclick = () => { st = 0; ans = {}; adv(); };
 }
+// Clicks en las opciones: guarda la respuesta, avanza de paso y vuelve a pintar.
 $("#adv").addEventListener("click", e => {
   const b = e.target.closest("[data-a]"); if (!b) return;
   ans[Q[st].k] = isNaN(b.dataset.a) ? b.dataset.a : +b.dataset.a; st++; adv();
 });
 adv();
 
-/* ===== TALLER PERSONALIZADO ===== */
+/* ===== TALLER PERSONALIZADO =====
+   El usuario elige metal y piedra, escribe su idea, y se arma
+   un mensaje de WhatsApp con el resumen del diseño. */
 const sel = { metal: "Oro amarillo 18k", stone: "Esmeralda colombiana" };
+// Pinta las opciones de un grupo (metal o piedra).
 function opts(id, key, list) {
   $(id).innerHTML = list.map(v => `<button class="opt ${sel[key] == v ? "sel" : ""}" data-k="${key}" data-v="${v}">${v}</button>`).join("");
 }
@@ -101,7 +124,9 @@ function taller() {
 document.addEventListener("click", e => { const o = e.target.closest("[data-k]"); if (o) { sel[o.dataset.k] = o.dataset.v; taller(); } });
 $("#idea").oninput = taller; taller();
 
-/* ===== TALLER / VIDEOS ===== */
+/* ===== EL ARTE ARTESANAL (galería) =====
+   Muestra las 3 imágenes (tallado, modelado, engastado); al tocar
+   cada tarjeta se revela su descripción. */
 const V = [
   ["El tallado de esmeralda", "Un toque de precisión", "Con buril y lupa, el maestro da forma a cada detalle del diseño de tu piedra.", "assets/img/tallado.jpeg"],
   ["El modelado personalizado", "Tu diseño hecho realidad", "Modelamos tu diseño, asegurándonos de que sea exactamente como tu imaginaste.", "assets/img/modelado.jpeg"],
@@ -110,7 +135,9 @@ const V = [
 $("#craft").innerHTML = V.map(v => `<div class="vid" data-aos="fade-up"><div class="scr"><img src="${esc(v[3])}" alt="${esc(v[0])}" loading="lazy"></div><div class="t"><h3 style="font-size:22px">${v[0]}</h3><div class="tag">${v[1]}</div><p>${v[2]}</p></div></div>`).join("");
 $("#craft").onclick = e => { const v = e.target.closest(".vid"); if (v) v.classList.toggle("go"); };
 
-/* ===== SEDES ===== */
+/* ===== SEDES =====
+   Pestañas para alternar entre Medellín y Chiquinquirá. El botón
+   de agendar cita solo aparece en Chiquinquirá. */
 const S = [
   { n: "Medellín", d: "Por ahora solo hay punto fisico en Chiquinquira", h: "Redes sociales, 24 horas" },
   { n: "Chiquinquirá", d: "Carrera 7a # 2-41 Los Sauces", h: "Lun–Sáb 9:00 – 18:00" }
@@ -122,7 +149,9 @@ function sede(i) {
 $(".tabs").onclick = e => { const b = e.target.closest("[data-s]"); if (b) sede(+b.dataset.s); };
 sede(0);
 
-/* ===== FORMULARIO DE CONTACTO ===== */
+/* ===== FORMULARIO DE CONTACTO =====
+   Valida los datos, guarda la solicitud en localStorage y, si hay
+   endpoint configurado, la envía por correo con Formspree. */
 $("#cf").addEventListener("submit", async e => {
   e.preventDefault();
   const f = e.target, d = Object.fromEntries(new FormData(f)), out = $("#cmsg");
@@ -141,7 +170,9 @@ $("#cf").addEventListener("submit", async e => {
   out.textContent = "✓ ¡Gracias " + r.name.split(" ")[0] + "! Recibimos tu solicitud y te contactaremos pronto.";
 });
 
-/* ===== CHATBOT IA (preguntas frecuentes) ===== */
+/* ===== CHATBOT (preguntas frecuentes) =====
+   No es IA real: busca palabras clave del usuario dentro de la
+   lista FAQ y responde la primera coincidencia; si no hay, sugiere WhatsApp. */
 const FAQ = [
   { k: ["hola", "buenas", "buenos dias", "buenas tardes"], a: "¡Hola! Soy el asistente de Joyas Oro y Esmeralda. Pregúntame por envíos, precios, tallas, personalizados o sedes." },
   { k: ["envio", "domicilio", "despacho", "enviar"], a: "Hacemos envíos seguros y asegurados a todo el país. El tiempo depende de la ciudad; te lo confirmamos al cotizar por WhatsApp." },
@@ -156,15 +187,19 @@ const FAQ = [
   { k: ["pago", "tarjeta", "transferencia", "nequi"], a: "Coordinamos el pago al cotizar por WhatsApp. Te indicamos los medios disponibles." },
   { k: ["sorteo", "rifa", "manilla laminada"], a: "Sigue nuestro Instagram y llena la encuesta rápida (al final de la página) para participar en el sorteo de la manilla laminada en oro." }
 ];
+// Quita tildes y mayúsculas para comparar mejor las palabras clave.
 const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 const msgs = $("#chatMsgs");
+// Añade un mensaje al chat (who = "me" o "bot").
 function say(t, who) { const d = document.createElement("div"); d.className = "msg " + who; d.textContent = t; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; }
+// Busca en FAQ la primera entrada que contenga alguna palabra clave del usuario.
 function reply(q) {
   const t = norm(q);
   const hit = FAQ.find(f => f.k.some(w => t.includes(w)));
   say(hit ? hit.a : "No estoy seguro de eso. ¿Quieres hablar con un asesor humano por WhatsApp? Escríbenos desde el botón verde de cualquier pieza o usa el formulario de contacto.", "bot");
 }
 function ask(q) { say(q, "me"); setTimeout(() => reply(q), 350); }
+// Preguntas rápidas, abrir/cerrar el chat y enviar mensaje.
 $("#chatQuick").innerHTML = ["Envíos", "Precios", "Personalizados", "Sedes", "Cuidado"].map(x => `<button type="button">${x}</button>`).join("");
 $("#chatQuick").onclick = e => { if (e.target.tagName == "BUTTON") ask(e.target.textContent); };
 $("#chatFab").onclick = () => {

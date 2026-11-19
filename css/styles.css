@@ -1,3 +1,10 @@
+/* =========================================================
+   styles.css — ESTILOS DE TODO EL SITIO
+   Tema oscuro con dorado y esmeralda. Organizado por secciones
+   con comentarios (NAV, BOTONES, HERO, CATÁLOGO, ADMIN, etc.).
+   ========================================================= */
+
+/* --- Variables de color y base del tema --- */
 :root {
   --bg: #07110d;
   --card: #0e1c16;
@@ -69,7 +76,7 @@ section {
   margin: auto
 }
 
-/* NAV */
+/* ===== NAVEGACIÓN ===== Barra superior y menú (incluido el menú móvil). */
 nav {
   position: sticky;
   top: 0;
@@ -122,7 +129,7 @@ nav {
   cursor: pointer
 }
 
-/* BOTONES */
+/* ===== BOTONES ===== Botones normal, "fill" (relleno) y de WhatsApp. */
 .btn {
   display: inline-block;
   border: 1px solid var(--gold);
@@ -168,7 +175,7 @@ nav {
   color: #fff
 }
 
-/* HERO */
+/* ===== PORTADA (HERO) ===== Encabezado principal de la página de inicio. */
 .hero {
   text-align: center;
   padding: 90px 20px 70px;
@@ -220,7 +227,7 @@ nav {
   display: block
 }
 
-/* PANELES */
+/* ===== PANELES ===== Contenedores con fondo y bordes redondeados. */
 .panel {
   background: var(--card);
   border: 1px solid var(--line);
@@ -317,7 +324,7 @@ nav {
   border-color: var(--gold)
 }
 
-/* CATÁLOGO */
+/* ===== CATÁLOGO ===== Grilla, tarjetas de producto, etiquetas, precios y favoritos. */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -394,7 +401,7 @@ nav {
   border-color: #ff7a7a
 }
 
-/* FORMULARIOS */
+/* ===== FORMULARIOS ===== Campos de entrada, selects, textareas y columnas. */
 .row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -457,7 +464,7 @@ textarea {
   width: auto
 }
 
-/* VIDEOS / TIMELINE */
+/* ===== GALERÍA ARTESANAL Y LÍNEA DE TIEMPO ===== Tarjetas de imágenes y la sección de historia. */
 .craft {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -555,7 +562,7 @@ footer {
   font-size: 14px
 }
 
-/* CHATBOT */
+/* ===== CHATBOT ===== Botón flotante, ventana de chat y burbujas de mensajes. */
 .chat-fab {
   position: fixed;
   right: 16px;
@@ -661,7 +668,7 @@ footer {
   padding: 10px
 }
 
-/* ADMIN */
+/* ===== ADMIN ===== Estilos del panel: login, estadísticas y listas. */
 .admin-wrap {
   max-width: 1000px;
   margin: auto;
@@ -737,7 +744,7 @@ footer {
   align-items: flex-start
 }
 
-/* RESPONSIVE */
+/* ===== RESPONSIVE ===== Ajustes para pantallas pequeñas (móvil). */
 @media(max-width:860px) {
   .burger {
     display: block

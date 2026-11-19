@@ -1,26 +1,40 @@
+/* =========================================================
+   admin.js — LÓGICA DEL PANEL PRIVADO (admin.html)
+   Login sencillo, estadísticas, gestión de solicitudes y de
+   productos. Todo se guarda en el localStorage del navegador.
+   ========================================================= */
+
 const $ = s => document.querySelector(s);
 
+// Credenciales del panel (definidas en el código).
 const ADMIN = { user: "sarapachon", pass: "KingEmerald26" };
 
+/* --- Sesión y login ---
+   Muestra el login o el panel según si hay sesión iniciada. */
 function show() {
   const ok = sessionStorage.getItem("jo_admin") === "1";
   $("#login").hidden = ok; $("#panel").hidden = !ok;
   if (ok) render();
 }
+// Validar usuario y contraseña al enviar el formulario de login.
 $("#lf").onsubmit = e => {
   e.preventDefault();
   if ($("#u").value.trim() === ADMIN.user && $("#pw").value === ADMIN.pass) {
     sessionStorage.setItem("jo_admin", "1"); $("#err").textContent = ""; $("#lf").reset(); show();
   } else $("#err").textContent = "Usuario o contraseña incorrectos.";
 };
+// Cerrar sesión.
 $("#logout").onclick = () => { sessionStorage.removeItem("jo_admin"); show(); };
 
+/* --- Pintar el panel ---
+   Estadísticas + lista de solicitudes + lista de productos. */
 function render() {
   const reqs = Store.requests(), prods = Store.products();
   $("#s-req").textContent = reqs.length;
   $("#s-new").textContent = reqs.filter(r => !r.done).length;
   $("#s-prod").textContent = prods.length;
 
+  // Lista de solicitudes del formulario de contacto.
   $("#reqList").innerHTML = reqs.map(r => `
     <div class="item ${r.done ? "done" : ""}">
       <div style="flex:1;min-width:220px">
@@ -34,6 +48,7 @@ function render() {
       </div>
     </div>`).join("") || '<p class="sub">Aún no hay solicitudes en este navegador.</p>';
 
+  // Lista de productos del catálogo.
   $("#prodList").innerHTML = prods.map(p => `
     <div class="item">
       <div style="flex:1;min-width:220px"><b>${esc(p.n)}</b><br>
@@ -42,6 +57,8 @@ function render() {
     </div>`).join("");
 }
 
+/* --- Acciones por click ---
+   Marcar/reabrir o eliminar solicitudes, eliminar productos y cambiar de pestaña. */
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-act]");
   if (b) {
@@ -58,6 +75,8 @@ document.addEventListener("click", e => {
   }
 });
 
+/* --- Agregar producto ---
+   Toma los datos del formulario, los añade al catálogo y lo guarda. */
 $("#pf").onsubmit = e => {
   e.preventDefault();
   const occ = [...document.querySelectorAll("#po input:checked")].map(i => i.value);
@@ -68,6 +87,8 @@ $("#pf").onsubmit = e => {
   });
   Store.saveProducts(list); e.target.reset(); render();
 };
+// Restaurar el catálogo de fábrica (borra los productos guardados).
 $("#reset").onclick = () => { if (confirm("¿Restaurar el catálogo original?")) { Store.resetProducts(); render(); } };
 
+// Arranque: decide qué mostrar al cargar la página.
 show();
