@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel administrador · Joyas Oro y Esmeralda</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<main class="login panel" id="login">
+  <h2>Acceso administrador</h2>
+  <p class="sub">Zona privada de gestión</p>
+  <form id="lf">
+    <label for="u">Usuario</label>
+    <input id="u" autocomplete="username" required>
+    <label for="pw">Contraseña</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <p class="note" id="err" role="alert" style="color:#ff9c95"></p>
+    <button class="btn fill" type="submit" style="width:100%">Ingresar</button>
+  </form>
+  <p class="sub" style="margin-top:16px"><a href="index.html">← Volver a la tienda</a></p>
+</main>
+
+<!-- PANEL -->
+<main class="admin-wrap" id="panel" hidden>
+  <div class="admin-top">
+    <h1>Panel de gestión</h1>
+    <div><a class="btn" href="index.html">Ver tienda</a> <button class="btn danger" id="logout">Cerrar sesión</button></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="s-req">0</b>Solicitudes</div>
+    <div class="stat"><b id="s-new">0</b>Pendientes</div>
+    <div class="stat"><b id="s-prod">0</b>Productos</div>
+  </div>
+
+  <div class="tabs">
+    <button class="chip on" data-t="req">Solicitudes</button>
+    <button class="chip" data-t="prod">Productos</button>
+  </div>
+
+  <section id="t-req" style="padding:0"><div id="reqList"></div></section>
+
+  <section id="t-prod" style="padding:0" hidden>
+    <form class="panel" id="pf" style="margin-bottom:20px">
+      <h3 style="color:var(--gold2);font-size:26px">Agregar producto</h3>
+      <div class="row">
+        <div>
+          <label for="pn">Nombre</label><input id="pn" required>
+          <label for="pc">Categoría</label>
+          <select id="pc"><option>Anillos</option><option>Manillas</option><option>Collares</option><option>Dijes</option></select>
+          <label for="pm">Material</label><input id="pm" placeholder="Oro 18k" required>
+        </div>
+        <div>
+          <label for="pp">Precio (COP)</label><input id="pp" type="number" min="1000" step="1000" required>
+          <label for="pt">Etiqueta</label><input id="pt" placeholder="Nuevo">
+          <label>Ocasiones</label>
+          <div class="checks" id="po">
+            <label><input type="checkbox" value="boda">Boda</label>
+            <label><input type="checkbox" value="diario">Diario</label>
+            <label><input type="checkbox" value="grado">Grado</label>
+            <label><input type="checkbox" value="regalo">Regalo</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn fill" type="submit">Guardar producto</button>
+    </form>
+    <div id="prodList"></div>
+    <button class="btn" id="reset">Restaurar catálogo original</button>
+  </section>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
